@@ -1,8 +1,11 @@
+using System;
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class player : MonoBehaviour
 {
 
+ private Animator anim;
  private Rigidbody2D rb;
 
  [SerializeField]private float moveSpeed = 3.5f;
@@ -11,20 +14,44 @@ public class player : MonoBehaviour
 
   void Awake()
   {
-    rb = GetComponent<Rigidbody2D>();    
+    rb = GetComponent<Rigidbody2D>();
+    anim = GetComponentInChildren<Animator>();    
   }
 
 
   void Update()
   {
-      xinput = Input.GetAxisRaw("Horizontal");
+  
+    handleinput();
+    movement();
+    handleanimations();
+    
+  }
 
-      rb.linearVelocity = new Vector2(xinput * moveSpeed, rb.linearVelocity.y);
+    private void handleanimations()
+    {
+      bool ismoving = rb.linearVelocity.x != 0;
+      anim.SetBool("ismoving", ismoving);
+    }
 
-      if (Input.GetKeyDown(KeyCode.Space))
-      {
-          rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
-      }
+    private void handleinput()
+  {
+    xinput = Input.GetAxisRaw("Horizontal");
+
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+      jump();
+    }
+  }
+
+  private void movement()
+  {
+    rb.linearVelocity = new Vector2(xinput * moveSpeed, rb.linearVelocity.y);
+  }
+
+  private void jump()
+  {
+    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);      
   }
 }
   
