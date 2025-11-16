@@ -4,7 +4,9 @@ public class player : MonoBehaviour
 {
 
  private Rigidbody2D rb;
- private float moveSpeed = 3.5f;
+
+ [SerializeField]private float moveSpeed = 3.5f;
+ [SerializeField]private float jumpforce = 8;
  private float xinput;
 
   void Awake()
@@ -18,6 +20,11 @@ public class player : MonoBehaviour
       xinput = Input.GetAxisRaw("Horizontal");
 
       rb.linearVelocity = new Vector2(xinput * moveSpeed, rb.linearVelocity.y);
+
+      if (Input.GetKeyDown(KeyCode.Space))
+      {
+          rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
+      }
   }
 }
   
