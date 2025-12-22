@@ -153,7 +153,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.5
   m_Material: {fileID: 6200000, guid: 4cb3607915f681c47b5d60c6ef5d6c39, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -193,8 +193,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc6519316f68f145b6b3c01f586d1c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player
-  moveSpeed: 3.5
+  moveSpeed: 5
   jumpforce: 8
+  groundcheckdistance: 1.4
+  WhatisGround:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!70 &333503113
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -243,7 +247,7 @@ GameObject:
   - component: {fileID: 1041183688}
   - component: {fileID: 1041183687}
   - component: {fileID: 1041183689}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

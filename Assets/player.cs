@@ -11,13 +11,13 @@ public class player : MonoBehaviour
  [SerializeField]private float moveSpeed = 3.5f;
  [SerializeField]private float jumpforce = 8;
  private float xinput;
+ private bool facingright = true;
 
  [Header("collision details")]
  [SerializeField] private float groundcheckdistance;
- [SerializeField] private bool isGrounded;
  [SerializeField] private LayerMask WhatisGround;
+ private bool isGrounded;
  
- [SerializeField]private bool facingright = true;
 
   void Awake()
   {
@@ -38,8 +38,9 @@ public class player : MonoBehaviour
 
     private void handleanimations()
     {
-      bool ismoving = rb.linearVelocity.x != 0;
-      anim.SetBool("ismoving", ismoving);
+      anim.SetFloat("xvelocity", rb.linearVelocity.x);
+      anim.SetFloat("yvelocity", rb.linearVelocity.y);
+      anim.SetBool("isGrounded", isGrounded);
     }
 
     private void handleinput()
