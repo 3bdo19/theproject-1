@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using UnityEditor.MPE;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class player : MonoBehaviour
  [SerializeField]private float jumpforce = 8;
  private float xinput;
  private bool facingright = true;
+ private bool canMove = true;
+ private bool canJump = true;
 
  [Header("collision details")]
  [SerializeField] private float groundcheckdistance;
@@ -36,12 +39,18 @@ public class player : MonoBehaviour
     
   }
 
-    private void handleanimations()
-    {
-      anim.SetFloat("xvelocity", rb.linearVelocity.x);
-      anim.SetFloat("yvelocity", rb.linearVelocity.y);
-      anim.SetBool("isGrounded", isGrounded);
-    }
+  public void EnableMovementAndJump(bool enable)
+  {
+    canMove = enable;
+    canJump = enable;
+
+  }
+  private void handleanimations()
+  {
+    anim.SetFloat("xvelocity", rb.linearVelocity.x);
+    anim.SetFloat("yvelocity", rb.linearVelocity.y);
+    anim.SetBool("isGrounded", isGrounded);
+  }
 
     private void handleinput()
   {
@@ -49,27 +58,52 @@ public class player : MonoBehaviour
 
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      jump();
+      trytojump();
     }
+  
+    if (Input.GetKeyDown(KeyCode.Mouse0))
+    {
+      TryToAttack();     
+    }
+      
   }
-
-  private void movement()
-  {
-    rb.linearVelocity = new Vector2(xinput * moveSpeed, rb.linearVelocity.y);
-  }
-
-  private void jump()
+  
+  private void TryToAttack()
   {
     if (isGrounded)
     {
-      rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);    
+        // 1. Trigger the animation
+     anim.SetTrigger("attack"); 
+      
+    }
+  }
+
+  private void trytojump()
+  {
+    if (isGrounded == true && canJump == true)
+    {
+      rb.linearVelocity = new UnityEngine.Vector2(rb.linearVelocity.x, jumpforce);    
     }
           
   }
 
+  private void movement()
+  {
+    if (canMove == true)
+    {
+      rb.linearVelocity = new UnityEngine.Vector2(xinput * moveSpeed, rb.linearVelocity.y);
+    }
+    
+    else
+    {
+      rb.linearVelocity = new UnityEngine.Vector2(0, rb.linearVelocity.y);
+    }
+  }
+
+
   private void HandleCollision()
   {
-    isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundcheckdistance, WhatisGround);     
+    isGrounded = Physics2D.Raycast(transform.position, UnityEngine.Vector2.down, groundcheckdistance, WhatisGround);     
   }
   private void handleflip()
   {
@@ -87,7 +121,7 @@ public class player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position , transform.position + new Vector3(0, -groundcheckdistance));
+        Gizmos.DrawLine(transform.position , transform.position + new UnityEngine.Vector3(0, -groundcheckdistance));
     }
 }
- 
+  
