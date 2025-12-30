@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Numerics;
 using UnityEditor.MPE;
 using UnityEngine;
@@ -9,8 +9,17 @@ public class Entity : MonoBehaviour
 
  protected Animator anim;
  protected Rigidbody2D rb;
+ protected Collider2D col;
+ protected SpriteRenderer sr;
 
- public Collider2D[] enemyColliders;
+ [Header("Health")]
+ [SerializeField]private int maxhealth = 1;
+ [SerializeField]private int currentHealth;
+ [SerializeField]private Material damagematerial;
+ [SerializeField]private float damagefeedbackduration = .2f;
+ private Coroutine damageFeedbackCoroutine;
+
+
  [Header("attack details")]
  [SerializeField] protected float AttackRadius;
  [SerializeField] protected Transform AttackPoint;
@@ -34,7 +43,11 @@ public class Entity : MonoBehaviour
   private void Awake()
   {
     rb = GetComponent<Rigidbody2D>();
-    anim = GetComponentInChildren<Animator>();    
+    anim = GetComponentInChildren<Animator>();   
+    col = GetComponent<Collider2D>(); 
+    sr = GetComponentInChildren<SpriteRenderer>();
+
+    currentHealth = maxhealth;
   }
 
 
@@ -60,7 +73,43 @@ public class Entity : MonoBehaviour
 
   public void Takedamage()
   {
-    throw new NotImplementedException();
+    currentHealth = currentHealth - 1;
+     
+    playDamageFeedback();
+
+    if (currentHealth <= 0)
+    {
+      Die();
+    }
+  }
+
+  private void playDamageFeedback()
+  {
+    if(damageFeedbackCoroutine != null)
+    {
+      StopCoroutine(damageFeedbackCoroutine);
+    }
+
+    StartCoroutine(DamageFeedbackCo());
+  }
+
+  private IEnumerator DamageFeedbackCo()
+  {
+   Material originalMat = sr.material;
+   sr.material = damagematerial;
+
+   yield return new WaitForSeconds(damagefeedbackduration);
+
+   sr.material = originalMat;
+
+  }
+
+  protected virtual void Die()
+  {
+    anim.enabled = false;
+    col.enabled = false;
+    rb.gravityScale = 12;
+    rb.linearVelocity= new UnityEngine.Vector2(rb.linearVelocity.x, 15);
   }
 
   public void EnableMovementAndJump(bool enable)
@@ -87,12 +136,12 @@ public class Entity : MonoBehaviour
   
     if (Input.GetKeyDown(KeyCode.Mouse0))
     {
-      TryToAttack();     
+      HandleAttack();     
     }
       
   }
   
-  protected virtual void TryToAttack()
+  protected virtual void HandleAttack()
   {
     if (isGrounded)
     {
