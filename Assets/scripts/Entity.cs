@@ -1,19 +1,28 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using UnityEditor.MPE;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class Entity : MonoBehaviour
 {
 
- private Animator anim;
- private Rigidbody2D rb;
+ protected Animator anim;
+ protected Rigidbody2D rb;
+
+ public Collider2D[] enemyColliders;
+ [Header("attack details")]
+ [SerializeField] protected float AttackRadius;
+ [SerializeField] protected Transform AttackPoint;
+ [SerializeField] protected LayerMask WhatisTarget;
+
 [Header("movement details")]
- [SerializeField]private float moveSpeed = 3.5f;
+ [SerializeField]protected float moveSpeed = 3.5f;
  [SerializeField]private float jumpforce = 8;
+ protected int facingDir = 1;
  private float xinput;
  private bool facingright = true;
- private bool canMove = true;
+ protected bool canMove = true;
  private bool canJump = true;
 
  [Header("collision details")]
@@ -22,14 +31,14 @@ public class player : MonoBehaviour
  private bool isGrounded;
  
 
-  void Awake()
+  private void Awake()
   {
     rb = GetComponent<Rigidbody2D>();
     anim = GetComponentInChildren<Animator>();    
   }
 
 
-  void Update()
+  protected virtual void Update()
   {
     HandleCollision();
     handleinput();
@@ -39,13 +48,28 @@ public class player : MonoBehaviour
     
   }
 
+  public void DamageTarget()
+  {
+    Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRadius, WhatisTarget);
+    foreach (Collider2D enemy in enemyColliders)
+    {
+      Entity entityTarget = enemy.GetComponent<Entity>();
+      entityTarget.Takedamage();
+    }
+  }
+
+  public void Takedamage()
+  {
+    throw new NotImplementedException();
+  }
+
   public void EnableMovementAndJump(bool enable)
   {
     canMove = enable;
     canJump = enable;
 
   }
-  private void handleanimations()
+  protected void handleanimations()
   {
     anim.SetFloat("xvelocity", rb.linearVelocity.x);
     anim.SetFloat("yvelocity", rb.linearVelocity.y);
@@ -68,7 +92,7 @@ public class player : MonoBehaviour
       
   }
   
-  private void TryToAttack()
+  protected virtual void TryToAttack()
   {
     if (isGrounded)
     {
@@ -87,7 +111,7 @@ public class player : MonoBehaviour
           
   }
 
-  private void movement()
+  protected virtual void movement()
   {
     if (canMove == true)
     {
@@ -101,11 +125,11 @@ public class player : MonoBehaviour
   }
 
 
-  private void HandleCollision()
+  protected virtual void HandleCollision()
   {
     isGrounded = Physics2D.Raycast(transform.position, UnityEngine.Vector2.down, groundcheckdistance, WhatisGround);     
   }
-  private void handleflip()
+  protected void handleflip()
   {
     if (rb.linearVelocity.x > 0 && facingright == false)
       flip();      
@@ -116,12 +140,14 @@ public class player : MonoBehaviour
   private void flip()
   {
     transform.Rotate(0, 180 ,0);
-    facingright = !facingright;    
+    facingright = !facingright;
+    facingDir = facingDir * -1;
   }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position , transform.position + new UnityEngine.Vector3(0, -groundcheckdistance));
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
     }
 }
   

@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
- private player Player;
+ private Entity Player;
 
  private void Awake()
  {
-   Player = GetComponentInParent<player>();     
+   Player = GetComponentInParent<Entity>();     
  }
+
+ public void DamageEnemies() => Player.DamageTarget();
 
  public void DisableMovementAndJump() => Player.EnableMovementAndJump(false);
 
