@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
  [SerializeField]private float jumpforce = 8;
  protected int facingDir = 1;
  private float xinput;
- private bool facingright = true;
+ protected bool facingright = true;
  protected bool canMove = true;
  private bool canJump = true;
 
@@ -178,7 +178,7 @@ public class Entity : MonoBehaviour
   {
     isGrounded = Physics2D.Raycast(transform.position, UnityEngine.Vector2.down, groundcheckdistance, WhatisGround);     
   }
-  protected void handleflip()
+  protected virtual void handleflip()
   {
     if (rb.linearVelocity.x > 0 && facingright == false)
       flip();      
@@ -186,7 +186,7 @@ public class Entity : MonoBehaviour
       flip();      
         
   }
-  private void flip()
+  protected void flip()
   {
     transform.Rotate(0, 180 ,0);
     facingright = !facingright;
@@ -196,7 +196,9 @@ public class Entity : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position , transform.position + new UnityEngine.Vector3(0, -groundcheckdistance));
-        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
+        
+        if(AttackPoint != null)
+          Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
     }
 }
   
