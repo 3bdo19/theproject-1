@@ -68,9 +68,13 @@ public class Player : Entity
         canJump = enable;
     }
 
-    protected override void Die()
+    public void die()
     {
-        base.Die();
-        UI.instance.EnableGameOverUI();
+       anim.enabled = false;
+       col.enabled = false;
+       rb.gravityScale = 12;
+       rb.linearVelocity= new UnityEngine.Vector2(rb.linearVelocity.x, 15);
+
+       Destroy(gameObject, 3);
     }
 }
