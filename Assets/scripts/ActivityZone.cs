@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class ActivityZone : MonoBehaviour
 {
+    [Header("References")]
     public GameObject activityCanvas; // Drag WordDestroyer_Canvas here
-    public WordDestroyer gameManager; // Drag _WordActivityManager here
+    public WordDestroyer gameManager; // This matches the name causing the error
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the object entering is the Player
         if (other.CompareTag("Player")) 
         {
-            activityCanvas.SetActive(true);
-            gameManager.enabled = true; // Starts the spawning timer
+            // 1. Tell the scripts_manager to handle music and scoring
+            scripts_manager sManager = FindObjectOfType<scripts_manager>();
+            if (sManager != null)
+            {
+                sManager.StartWordActivity();
+            }
+
+            // 2. Start the game visuals and logic
+            if (activityCanvas != null) activityCanvas.SetActive(true);
+            if (gameManager != null) gameManager.enabled = true; 
         }
     }
 
@@ -19,8 +27,16 @@ public class ActivityZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            activityCanvas.SetActive(false);
-            gameManager.enabled = false; // Stops spawning if player runs away
+            // 1. Tell the scripts_manager to reset everything
+            scripts_manager sManager = FindObjectOfType<scripts_manager>();
+            if (sManager != null)
+            {
+                sManager.StopWordActivity();
+            }
+
+            // 2. Stop the game visuals and logic
+            if (activityCanvas != null) activityCanvas.SetActive(false);
+            if (gameManager != null) gameManager.enabled = false; 
         }
     }
 }

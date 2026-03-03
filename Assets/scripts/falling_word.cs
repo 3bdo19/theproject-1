@@ -7,6 +7,7 @@ public class FallingWord : MonoBehaviour
     private bool isCorrect;
     private WordDestroyer manager;
     private float speed;
+    public int gameHelper;
 
     // Use TextMeshPro (World Space) instead of TextMeshProUGUI (Canvas)
     private TextMeshPro textComponent;

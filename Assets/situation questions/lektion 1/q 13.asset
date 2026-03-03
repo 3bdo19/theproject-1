@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
-  m_Name: bakeryLesson
+  m_Name: q 13
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: hi how are you
+  questionText: "Ein Freund fragt: \"Wie hei\xDFt die Stra\xDFe?\" Du antwortest:
+    \"Hauptstra\xDFe. H-A-U-P-T-...\""
   answers:
-  - 'bad '
-  - bad
-  - bad
-  - fine
+  - "a) Ja, Hauptstra\xDFe."
+  - b) Nein, das ist falsch.
+  - c) Wie bitte?
+  - d) S-T-R-A-S-S-E.
   correctIndex: 3
-  successMessage: you are fine!
-  failMessage: you are bad!
+  successMessage: 
+  failMessage: 

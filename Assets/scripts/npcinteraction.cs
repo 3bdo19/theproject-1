@@ -6,6 +6,7 @@ using TMPro;
 
 public class NPCInteraction : MonoBehaviour
 {
+    // ... [Existing UI and Content Slots] ...
     [Header("UI GameObjects")]
     public GameObject dialoguePanel;
     public GameObject interactPrompt;
@@ -22,11 +23,17 @@ public class NPCInteraction : MonoBehaviour
     [TextArea(3, 10)] public string[] germanLines;
     [TextArea(3, 10)] public string[] arabicLines;
 
+    [Header("Voice Settings")] // NEW SECTION
+    [Tooltip("Type 'HerrSchmidt' or 'SecondCharacter' to match scripts_manager")]
+    public string voiceCharacterName = "HerrSchmidt"; 
+    public bool useCatVoiceInstead = false; 
+
     [Header("Settings")]
-    public float typingSpeed = 0.05f; // How fast the letters appear
+    public float typingSpeed = 0.05f; 
     private Coroutine typingCoroutine;
     private bool isTyping = false;
 
+    // ... [Existing Variables and Start/Update/Flip logic] ...
     private int index = 0;
     private bool isPlayerNearby = false;
 
@@ -39,24 +46,23 @@ public class NPCInteraction : MonoBehaviour
 
     void Update()
     {
-        // 1. Logic for starting the dialogue
         if (isPlayerNearby && !dialoguePanel.activeSelf)
         {
             if (interactPrompt != null) interactPrompt.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Return))
             {
+                scripts_manager manager = FindObjectOfType<scripts_manager>();
+                if (manager != null) manager.PauseWorldMusic();
                 StartDialogue();
                 return;
             }
         }
-        
         else if (interactPrompt != null)
         {
             interactPrompt.SetActive(false);
         }
 
-        // 2. Logic for moving to the next line
         if (dialoguePanel.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(1))
@@ -80,15 +86,52 @@ public class NPCInteraction : MonoBehaviour
             portraitImageSlot.gameObject.SetActive(true);
         }
 
-        ShowLines();
+        UpdateUI(); // Changed to UpdateUI to trigger typing and sound on the first line
     }
 
+    // --- MODIFIED TYPETEXT COROUTINE ---
+    IEnumerator TypeText(string german, string arabic)
+    {
+        isTyping = true;
+        germanText.text = "";
+        arabicText.text = "";
+
+        scripts_manager manager = FindObjectOfType<scripts_manager>();
+        if (manager != null)
+        {
+            // If the toggle is off, play the specific character voice
+            if (!useCatVoiceInstead)
+            {
+                manager.PlayCharacterVoice(voiceCharacterName);
+            }
+            else
+            {
+                manager.PlayRandomCatVoiceOnce();
+            }
+        }
+
+        char[] letters = german.ToCharArray();
+
+        for (int i = 0; i < letters.Length; i++)
+        {
+            germanText.text += letters[i];
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        
+        // No need to stop cat voice if we used a OneShot character voice, but safe to keep
+        if (manager != null) manager.StopCatVoice();
+         
+        arabicText.text = arabic; 
+        isTyping = false;
+    }
+
+    // ... [Rest of your existing functions: NextLine, UpdateUI, EndDialogue, etc.] ...
     public void NextLine()
     {
         if (isTyping)
         {
-            // If the player clicks while it's typing, finish the line instantly
             StopCoroutine(typingCoroutine);
+            FindObjectOfType<scripts_manager>().StopCatVoice();
             germanText.text = germanLines[index];
             arabicText.text = arabicLines[index];
             isTyping = false;
@@ -104,15 +147,16 @@ public class NPCInteraction : MonoBehaviour
         }
     }
 
-    void ShowLines()
+    void UpdateUI()
     {
-        // Text appears instantly without any typewriter effect
-        germanText.text = germanLines[index];
-        arabicText.text = arabicLines[index];
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        typingCoroutine = StartCoroutine(TypeText(germanLines[index], arabicLines[index]));
     }
 
     void EndDialogue()
     {
+        scripts_manager manager = FindObjectOfType<scripts_manager>();
+        if (manager != null) manager.ResumeWorldMusic();
         dialoguePanel.SetActive(false);
         if (portraitImageSlot != null) portraitImageSlot.gameObject.SetActive(false);
         index = 0; 
@@ -144,45 +188,5 @@ public class NPCInteraction : MonoBehaviour
             isPlayerNearby = false;
             EndDialogue();
         }
-    }
-
-    void UpdateUI()
-    {
-        // If we were already typing, stop it before starting a new line
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-        }
-
-        typingCoroutine = StartCoroutine(TypeText(germanLines[index], arabicLines[index]));
-    }
-
-    IEnumerator TypeText(string german, string arabic)
-    {
-        isTyping = true;
-        germanText.text = "";
-        arabicText.text = "";
-
-        // Type the German text first
-        foreach (char letter in german.ToCharArray())
-        {
-            germanText.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
-        }
-
-        // Once German is done, show the Arabic
-        // You can make this type out too, or just snap it in
-        arabicText.text = arabic; 
-        
-        isTyping = false;
-    }
-
-    public void PreviousLine()
-    {
-    if (index > 0)
-    {
-        index--;
-        ShowLines(); // Updates the text to the previous index instantly
-    }
     }
 }

@@ -8,11 +8,13 @@ public class Player : Entity
     private float xinput;
     private bool canJump = true;
     protected Transform player;
+    private scripts_manager myManager;
 
 
     protected override void Awake()
     {
         base.Awake();
+        myManager = FindObjectOfType<scripts_manager>();
 
         player = FindFirstObjectByType<Player>().transform; 
     }
@@ -74,6 +76,9 @@ public class Player : Entity
        col.enabled = false;
        rb.gravityScale = 12;
        rb.linearVelocity= new UnityEngine.Vector2(rb.linearVelocity.x, 15);
+
+     myManager.TriggerGameOver(); // Now 'myManager' exists!
+    
 
        Destroy(gameObject, 3);
     }

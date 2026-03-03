@@ -7,49 +7,48 @@ public class SituationManager : MonoBehaviour
 {
     [Header("UI References")]
     public TextMeshProUGUI promptDisplay;
-    public GameObject buttonContainer; // Drag the object holding your 4 buttons here
-    public Button[] choiceButtons;     // Drag the 4 buttons here
+    public GameObject buttonContainer; 
+    public Button[] choiceButtons;     
 
     [Header("Activity Content")]
     public List<SituationData> questionList;
     [TextArea(2, 5)]
     public string introMessage = "Guten Tag! Bist du bereit für den Test? Drücke nochmal 'W' um anzufangen!";
 
+    [Header("NPC Settings")]
+    [Tooltip("Type 'HerrSchmidt' or 'SecondCharacter' to match the scripts_manager clips")]
+    public string voiceCharacterName = "HerrSchmidt"; // NEW: Changed from hardcoded string
+
     [Header("Rewards")]
     public Animator doorAnimator; 
 
-    private int currentQuestionIndex = -1; // -1 means we are showing the Intro
+    private int currentQuestionIndex = -1; 
     private int correctAnswersCount = 0;
     private bool isQuizActive = false;
     public bool isFinished = false;
 
-    // This runs automatically when the UI is turned on via the NPC script
     void OnEnable()
     {
         currentQuestionIndex = -1; 
         correctAnswersCount = 0;
         isQuizActive = false;
+        isFinished = false; // Reset finished state
         ShowIntro();
     }
 
     void ShowIntro()
     {
-        // 1. Show Herr Schmidt's welcome message
         promptDisplay.text = introMessage;
-
-        // 2. Hide the answer buttons so they don't see them yet
         if (buttonContainer != null) buttonContainer.SetActive(false);
     }
 
-    // This is called by the NpcInteraction script when you press W a second time
     public void StartFirstQuestion()
     {
-        if (isQuizActive) return; // Prevent restarting if already in the quiz
+        if (isQuizActive) return; 
 
         isQuizActive = true;
         currentQuestionIndex = 0;
 
-        // Show the buttons now that the quiz started
         if (buttonContainer != null) buttonContainer.SetActive(true);
         
         ShowQuestion();
@@ -57,25 +56,40 @@ public class SituationManager : MonoBehaviour
 
     void ShowQuestion()
     {
+        if (currentQuestionIndex < 0 || currentQuestionIndex >= questionList.Count)
+        {
+            Debug.LogWarning("ShowQuestion called with invalid index: " + currentQuestionIndex);
+            return;
+        }
+
         SituationData data = questionList[currentQuestionIndex];
         promptDisplay.text = data.questionText;
 
+        // --- UPDATED AUDIO LOGIC ---
+        scripts_manager manager = Object.FindAnyObjectByType<scripts_manager>();
+        if (manager != null)
+        {
+            // Now uses the variable from the Inspector
+            manager.PlayCharacterVoice(voiceCharacterName); 
+        }
+
         for (int i = 0; i < choiceButtons.Length; i++)
         {
-            // Set button text
             TextMeshProUGUI btnText = choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (btnText != null) btnText.text = data.answers[i];
+            
+            if (btnText != null && i < data.answers.Length) 
+            {
+                btnText.text = data.answers[i];
+            }
 
-            // Setup button click
             int index = i; 
             choiceButtons[i].onClick.RemoveAllListeners();
             choiceButtons[i].onClick.AddListener(() => OnAnswerClicked(index));
         }
     }
 
-    void OnAnswerClicked(int selectedIndex)
+   void OnAnswerClicked(int selectedIndex)
     {
-        // Check answer
         if (selectedIndex == questionList[currentQuestionIndex].correctIndex)
         {
             correctAnswersCount++;
@@ -85,7 +99,6 @@ public class SituationManager : MonoBehaviour
             TriggerSubtleShake();
         }
 
-        // Next question
         currentQuestionIndex++;
 
         if (currentQuestionIndex < questionList.Count)
@@ -99,44 +112,48 @@ public class SituationManager : MonoBehaviour
     }
 
     void CalculateFinalScore()
-{
-    // 1. Logic States
-    isQuizActive = false;
-    isFinished = true; // Tells TeacherInteraction.cs that W should now CLOSE the UI
-
-    // 2. UI Cleanup
-    if (buttonContainer != null) buttonContainer.SetActive(false);
-
-    // 3. Score Calculation
-    float scorePercent = ((float)correctAnswersCount / questionList.Count) * 100f;
-    promptDisplay.text = $"Ergebnis: {scorePercent}%";
-
-    // 4. Success or Failure Logic
-    if (scorePercent >= 80f)
     {
-        promptDisplay.text += "\n\nAusgezeichnet! Die Tür ist offen.";
-        
-        if (doorAnimator != null) 
-        {
-            // Play the opening animation
-            doorAnimator.SetTrigger("Open");
+        isQuizActive = false;
+        isFinished = true; 
 
-            // PHYSICS FIX: Turn off the collider so the player can walk through
-            Collider2D doorCol = doorAnimator.GetComponent<Collider2D>();
-            if (doorCol != null) 
+        if (buttonContainer != null) buttonContainer.SetActive(false);
+
+        float scorePercent = ((float)correctAnswersCount / questionList.Count) * 100f;
+        
+        if (scorePercent >= 80f)
+        {
+            promptDisplay.text = $"Ergebnis: {scorePercent}%";
+            promptDisplay.text += "\n\nAusgezeichnet! Die Tür ist offen.";
+            
+            if (doorAnimator != null) 
             {
-                doorCol.enabled = false; 
-                Debug.Log("Door is now open and passable!");
+                doorAnimator.SetTrigger("Open");
+
+                Collider2D doorCol = doorAnimator.GetComponent<Collider2D>();
+                if (doorCol != null) 
+                {
+                    doorCol.enabled = false; 
+                    Debug.Log("Door is now open and passable!");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Score below 80%. Triggering Game Over.");
+            
+            scripts_manager manager = Object.FindAnyObjectByType<scripts_manager>();
+            
+            if (manager != null)
+            {
+                manager.TriggerGameOver();
+                this.gameObject.SetActive(false); 
+            }
+            else
+            {
+                Debug.LogError("Could not find scripts_manager in the scene!");
             }
         }
     }
-    else
-    {
-        promptDisplay.text += "\n\nDas reicht nicht. Lern mehr mit Herr Schmidt!";
-        // Note: isFinished is still true, so the player can press W to close 
-        // the menu and try talking to him again to restart.
-    }
-}
 
     void TriggerSubtleShake()
     {

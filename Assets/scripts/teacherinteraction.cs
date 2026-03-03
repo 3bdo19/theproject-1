@@ -25,6 +25,8 @@ public class NpcInteraction : MonoBehaviour
                 if (manager.isFinished) 
                 {
                     situationUI.SetActive(false);
+                    // Resume the world music because the conversation is over
+                    FindObjectOfType<scripts_manager>().ResumeWorldMusic();
                     Debug.Log("Dialogue Closed.");
                 }
                 // If the quiz isn't started yet, W starts the questions
@@ -46,6 +48,8 @@ public class NpcInteraction : MonoBehaviour
     {
         if (situationUI != null)
         {
+            // Find the manager and pause the world music
+            FindObjectOfType<scripts_manager>().PauseWorldMusic();
             situationUI.SetActive(true);
             Debug.Log("Dialogue Started!");
         }

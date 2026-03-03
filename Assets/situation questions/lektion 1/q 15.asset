@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
+  m_Name: q 15
+  m_EditorClassIdentifier: Assembly-CSharp::SituationData
+  questionText: 'Dein Lehrer sagt: "Das Wort ist ''Haus''. Bitte ________ das Wort."'
+  answers:
+  - a) buchstabieren Sie
+  - "b) gr\xFC\xDFen Sie"
+  - c) fragen Sie
+  - d) sagen Sie
+  correctIndex: 1
+  successMessage: 
+  failMessage: 
