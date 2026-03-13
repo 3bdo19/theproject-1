@@ -77,7 +77,7 @@ public class Player : Entity
        rb.gravityScale = 12;
        rb.linearVelocity= new UnityEngine.Vector2(rb.linearVelocity.x, 15);
 
-     myManager.TriggerGameOver(); // Now 'myManager' exists!
+     myManager.TriggerGameOver(); 
     
 
        Destroy(gameObject, 3);

@@ -17,8 +17,7 @@ public class SituationManager : MonoBehaviour
 
     [Header("NPC Settings")]
     [Tooltip("Type 'HerrSchmidt' or 'SecondCharacter' to match the scripts_manager clips")]
-    public string voiceCharacterName = "HerrSchmidt"; // NEW: Changed from hardcoded string
-
+    public string voiceCharacterName = "HerrSchmidt"; 
     [Header("Rewards")]
     public Animator doorAnimator; 
 
@@ -32,7 +31,7 @@ public class SituationManager : MonoBehaviour
         currentQuestionIndex = -1; 
         correctAnswersCount = 0;
         isQuizActive = false;
-        isFinished = false; // Reset finished state
+        isFinished = false; 
         ShowIntro();
     }
 
@@ -65,11 +64,9 @@ public class SituationManager : MonoBehaviour
         SituationData data = questionList[currentQuestionIndex];
         promptDisplay.text = data.questionText;
 
-        // --- UPDATED AUDIO LOGIC ---
         scripts_manager manager = Object.FindAnyObjectByType<scripts_manager>();
         if (manager != null)
         {
-            // Now uses the variable from the Inspector
             manager.PlayCharacterVoice(voiceCharacterName); 
         }
 

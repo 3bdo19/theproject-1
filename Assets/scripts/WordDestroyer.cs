@@ -7,7 +7,7 @@ public class WordDestroyer : MonoBehaviour
     [Header("UI & Spawning")]
     public GameObject wordPrefab; 
     public Transform worldSpawnAnchor; 
-    public float fallSpeed = 5f; // Reduced for world space (100f is too fast for 2D)
+    public float fallSpeed = 5f; 
     public GameObject activityCanvas;
     public TextMeshProUGUI scoreText;
 
@@ -25,13 +25,13 @@ public class WordDestroyer : MonoBehaviour
     [HideInInspector] public bool isGameActive = false; 
     public scripts_manager myManager;
 
-    // --- THE FIX: Reset everything when the manager enables this script ---
+    
     private void OnEnable()
     {
-        Debug.Log("WordDestroyer: Script Enabled!"); // Check 1
+        Debug.Log("WordDestroyer: Script Enabled!"); 
         isGameActive = true;
         currentScore = 0;
-        spawnTimer = 0.5f; // Initial delay
+        spawnTimer = 0.5f; 
         
         if (scoreText != null) scoreText.text = "Score: 0";
     }
@@ -44,7 +44,7 @@ public class WordDestroyer : MonoBehaviour
         
         if (spawnTimer <= 0)
         {
-            Debug.Log("WordDestroyer: Attempting to Spawn..."); // Check 2
+            Debug.Log("WordDestroyer: Attempting to Spawn..."); 
             SpawnWord();
             spawnTimer = 1.5f; 
         }
@@ -61,11 +61,11 @@ public class WordDestroyer : MonoBehaviour
         
         float randomSpeed = Random.Range(fallSpeed * 0.8f, fallSpeed * 1.2f);
         
-        // Use a 50/50 chance for target vs decoy
+        
         bool isTarget = Random.value > 0.5f;
         string txt = isTarget ? targetWords[Random.Range(0, targetWords.Length)] : decoyWords[Random.Range(0, decoyWords.Length)];
         
-        // Ensure the FallingWord script gets the data
+        
         if(newWord.TryGetComponent(out FallingWord fw))
         {
             fw.Setup(txt, isTarget, this, randomSpeed);
@@ -96,20 +96,20 @@ public class WordDestroyer : MonoBehaviour
     {
         isGameActive = false; 
         
-        // 1. Tell the manager to stop the stress music and UI
+        
         if (myManager != null)
         {
             myManager.StopWordActivity();
         }
 
-        // 2. Handle the door
+        
         if (doorAnimator != null)
         {
             doorAnimator.SetTrigger("Open"); 
             if (doorAnimator.TryGetComponent(out Collider2D col)) col.enabled = false;
         }
 
-        // 3. Clear any remaining words in the scene
+        
         FallingWord[] remainingWords = FindObjectsOfType<FallingWord>();
         foreach (FallingWord w in remainingWords) Destroy(w.gameObject);
     }

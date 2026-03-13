@@ -34,7 +34,6 @@ public class StaticNPCInteraction : MonoBehaviour
     private int index = 0;
     private bool isPlayerNearby = false;
 
-    // --- NO ANIMATOR REFERENCES HERE ---
 
     void Start()
     {

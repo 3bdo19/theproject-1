@@ -6,7 +6,6 @@ using TMPro;
 
 public class NPCInteraction : MonoBehaviour
 {
-    // ... [Existing UI and Content Slots] ...
     [Header("UI GameObjects")]
     public GameObject dialoguePanel;
     public GameObject interactPrompt;
@@ -23,7 +22,7 @@ public class NPCInteraction : MonoBehaviour
     [TextArea(3, 10)] public string[] germanLines;
     [TextArea(3, 10)] public string[] arabicLines;
 
-    [Header("Voice Settings")] // NEW SECTION
+    [Header("Voice Settings")] 
     [Tooltip("Type 'HerrSchmidt' or 'SecondCharacter' to match scripts_manager")]
     public string voiceCharacterName = "HerrSchmidt"; 
     public bool useCatVoiceInstead = false; 
@@ -33,7 +32,7 @@ public class NPCInteraction : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping = false;
 
-    // ... [Existing Variables and Start/Update/Flip logic] ...
+    
     private int index = 0;
     private bool isPlayerNearby = false;
 
@@ -86,10 +85,10 @@ public class NPCInteraction : MonoBehaviour
             portraitImageSlot.gameObject.SetActive(true);
         }
 
-        UpdateUI(); // Changed to UpdateUI to trigger typing and sound on the first line
+        UpdateUI(); 
     }
 
-    // --- MODIFIED TYPETEXT COROUTINE ---
+    
     IEnumerator TypeText(string german, string arabic)
     {
         isTyping = true;
@@ -99,7 +98,6 @@ public class NPCInteraction : MonoBehaviour
         scripts_manager manager = FindObjectOfType<scripts_manager>();
         if (manager != null)
         {
-            // If the toggle is off, play the specific character voice
             if (!useCatVoiceInstead)
             {
                 manager.PlayCharacterVoice(voiceCharacterName);
@@ -118,14 +116,12 @@ public class NPCInteraction : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
         
-        // No need to stop cat voice if we used a OneShot character voice, but safe to keep
         if (manager != null) manager.StopCatVoice();
          
         arabicText.text = arabic; 
         isTyping = false;
     }
 
-    // ... [Rest of your existing functions: NextLine, UpdateUI, EndDialogue, etc.] ...
     public void NextLine()
     {
         if (isTyping)

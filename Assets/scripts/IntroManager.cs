@@ -13,7 +13,6 @@ public class IntroManager : MonoBehaviour
     [TextArea(3, 10)] 
     public string[] stories = new string[3]; 
     
-    // 1. Array for 3 different typing speeds
     public float[] typingSpeeds = new float[3] { 0.05f, 0.05f, 0.05f }; 
 
     private int storyIndex = 0;
@@ -52,7 +51,6 @@ public class IntroManager : MonoBehaviour
         scripts_manager manager = FindObjectOfType<scripts_manager>();
         if (manager != null) manager.PlayIntroVoice(index);
 
-        // 2. Use the speed from the array based on the index
         float currentSpeed = typingSpeeds[index]; 
 
         foreach (char letter in stories[index].ToCharArray())
@@ -98,17 +96,14 @@ public void SkipIntro()
     scripts_manager manager = FindObjectOfType<scripts_manager>();
     if (manager != null)
     {
-        manager.StopCatVoice(); // Stop any leftover story audio
+        manager.StopCatVoice(); 
         
-        // NEW LOGIC: Check if music is actually playing
         if (manager.worldBgmSource != null && manager.worldBgmSource.clip == null)
         {
-            // If no music was ever started, start it now
             manager.PlayRandomWorldTrack(); 
         }
         else
         {
-            // If music was paused, resume it
             manager.ResumeWorldMusic(); 
         }
     }

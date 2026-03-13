@@ -26,7 +26,6 @@ public class scripts_manager : MonoBehaviour
     [Header("NPC Voice Clips")]
     public AudioClip herrSchmidtVoice;
     public AudioClip secondCharacterVoice;
-    // The array for your 3 intro stories
     public AudioClip[] introStoryVoices; 
 
     [Header("Stress Music Settings")]
@@ -48,7 +47,6 @@ public class scripts_manager : MonoBehaviour
     private bool isGameActive = false;
     private bool anyScrollerWasOpen = false;
 
-    // Standard NPC Voice Playback
     public void PlayCharacterVoice(string characterName)
     {
         if (sfxSource == null) 
@@ -71,7 +69,6 @@ public class scripts_manager : MonoBehaviour
         }
     }
 
-    // NEW: Specific function for Intro Manager to call by index (0, 1, or 2)
     public void PlayIntroVoice(int index)
     {
         if (sfxSource == null) return;
@@ -87,7 +84,6 @@ public class scripts_manager : MonoBehaviour
 
     void Start()
     {
-        // Don't play music if the intro is currently active
         IntroManager intro = FindObjectOfType<IntroManager>();
         if (intro == null || !intro.introPanel.activeInHierarchy)
         {
