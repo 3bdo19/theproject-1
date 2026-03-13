@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 13
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: "Ein Freund fragt: \"Wie hei\xDFt die Stra\xDFe?\" Du antwortest:
-    \"Hauptstra\xDFe. H-A-U-P-T-...\""
+  questionText: 13. Wie fragst du auf Deutsch nach dem Preis?
   answers:
-  - "a) Ja, Hauptstra\xDFe."
-  - b) Nein, das ist falsch.
-  - c) Wie bitte?
-  - d) S-T-R-A-S-S-E.
-  correctIndex: 3
+  - a) Wann ist das?
+  - b) Wie viel kostet das?
+  - c) Wer ist das?
+  - d) Wo ist das?
+  correctIndex: 1
   successMessage: 
   failMessage: 

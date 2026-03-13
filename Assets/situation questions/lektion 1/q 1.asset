@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 1
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: Du triffst einen Freund am Morgen. Was sagst du?
+  questionText: "1. Dein Freund in Deutschland fragt: \"Wann treffen wir uns?\" Du
+    schl\xE4gst den ersten Tag der Arbeitswoche vor."
   answers:
-  - "a) Tsch\xFCs!"
-  - b) Hallo!
-  - c) Danke!
-  - d) Ja, bitte.
-  correctIndex: 1
+  - a) Am Samstag.
+  - b) Im Juli.
+  - c) Am Montag.
+  - d) Im Winter.
+  correctIndex: 2
   successMessage: you are fine!
   failMessage: you are bad!

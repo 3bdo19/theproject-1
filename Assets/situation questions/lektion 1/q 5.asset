@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 5
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: Du gehst nach Hause. Deine Freunde bleiben im Park. Was sagst du
-    zum Abschied?
+  questionText: "5. Du planst eine Reise ans Meer. Welche Jahreszeit ist daf\xFCr
+    am besten?"
   answers:
-  - a) Hallo!
-  - c) Wie geht's?
-  - d) Danke!
-  - "b) Tsch\xFCs!"
-  correctIndex: 3
+  - a) Der Sommer.
+  - b) Der Winter.
+  - c) Der Morgen.
+  - d) Der Euro.
+  correctIndex: 0
   successMessage: 
   failMessage: 

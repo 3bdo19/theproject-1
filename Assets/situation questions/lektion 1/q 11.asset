@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 11
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'A: "Mein Name ist Schmidt." B: "Wie schreibt man das?" A: "________"'
+  questionText: 11. Welcher Wochentag kommt nach Dienstag?
   answers:
-  - a) Ja, das ist mein Name.
-  - b) S-C-H-M-I-D-T.
-  - c) Das ist ein Name.
-  - d) Schmidt, bitte.
-  correctIndex: 1
+  - a) Montag
+  - b) Samstag
+  - c) Mittwoch
+  correctIndex: 2
   successMessage: 
   failMessage: 

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 14
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Du bist im Hotel. Der Rezeptionist fragt: "Ihr Name ist Meier. M-E-I-E-R.
-    Richtig?" Du sagst:'
+  questionText: "14. Du bist im Restaurant und m\xF6chtest kein Fleischprodukte.
+    Du sagst: \"Ich esse lieber ___________.\""
   answers:
-  - a) Nein, das ist gut.
-  - b) Ja, genau.
-  - c) Hallo, Meier.
-  - "d) Tsch\xFCs."
+  - a) Steak
+  - "b) Gem\xFCse"
+  - c) Wurst
+  - "d) H\xE4hnchen"
   correctIndex: 1
   successMessage: 
   failMessage: 

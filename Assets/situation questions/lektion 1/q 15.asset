@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 15
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Dein Lehrer sagt: "Das Wort ist ''Haus''. Bitte ________ das Wort."'
+  questionText: '15. Dein Freund isst einen Apfel. Du magst lieber Bananen. Du sagst:
+    "Ich esse lieber eine ___________."'
   answers:
-  - a) buchstabieren Sie
-  - "b) gr\xFC\xDFen Sie"
-  - c) fragen Sie
-  - d) sagen Sie
-  correctIndex: 1
+  - a) Orange
+  - b) Pizza
+  - c) Banane
+  - d) Wurst
+  correctIndex: 2
   successMessage: 
   failMessage: 

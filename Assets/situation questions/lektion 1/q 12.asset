@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 12
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Du bist am Telefon und gibst deine E-Mail-Adresse. Du sagst: "Der
-    Name ist M-A-X." Was machst du?'
+  questionText: '12. A: "Trinkst du gern Cola?" - B: "Nein, ich trinke ___________
+    Wasser."'
   answers:
-  - "a) Du gr\xFC\xDFt."
-  - b) Du fragst.
-  - c) Du buchstabierst.
-  - d) Du trinkst.
+  - a) auch
+  - b) gern
+  - c) lieber
+  - d) gut
   correctIndex: 2
   successMessage: 
   failMessage: 

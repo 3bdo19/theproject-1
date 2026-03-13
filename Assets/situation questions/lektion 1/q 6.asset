@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 6
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Ein Freund fragt: "Trinkst du gern Kaffee?". Du magst Kaffee. Was
-    antwortest du?'
+  questionText: "6. Du m\xF6chtest im Gesch\xE4ft wissen: wie teuer ist eine Jacke.
+    Was fragst du?"
   answers:
-  - a) Nein, ich mag Kaffee.
-  - b) Ja, ich mag Tee.
-  - c) Ja, ich mag Kaffee.
-  - "d) Nein, ich mag Fu\xDFball."
+  - a) Wie geht's?
+  - b) Wer ist das?
+  - c) Was kostet das?
+  - d) Wann bitte?
   correctIndex: 2
   successMessage: 
   failMessage: 

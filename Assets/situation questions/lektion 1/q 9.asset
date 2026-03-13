@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 9
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'A: "Ich liebe Sport." B: "Wirklich? Ich mag Sport ________."'
+  questionText: "9. Wie hei\xDFt das Geld in Deutschland und vielen anderen L\xE4ndern
+    in Europa?"
   answers:
-  - a) gut
-  - b) nicht
-  - c) ja
-  - d) nein
-  correctIndex: 0
+  - a) Dollar.
+  - b) Pfund.
+  - c) Euro.
+  - d) Franken.
+  correctIndex: 2
   successMessage: 
   failMessage: 

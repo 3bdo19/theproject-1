@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 8
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Du bist im Restaurant. Der Kellner fragt: "________ Sie Fisch?"'
+  questionText: "8. Ein Kaffee kostet 2,50 Euro. Du gibst 3 Euro. Was bekommst du
+    zur\xFCck?"
   answers:
-  - a) Geht
-  - b) Magst
-  - "c) M\xF6gen"
-  - d) Sind
-  correctIndex: 2
+  - a) 50 Cent.
+  - b) Ein Euro.
+  - c) Einen Kaffee.
+  - d) Einen Euro 50.
+  correctIndex: 0
   successMessage: 
   failMessage: 

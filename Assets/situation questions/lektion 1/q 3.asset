@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 3
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: "Du bist in der Klasse und gehst. Was sagst du deinen Mitsch\xFClern?"
+  questionText: 3. Es schneit und ist sehr kalt. Welche Jahreszeit ist das?
   answers:
-  - a) Hallo!
-  - b) Wie geht's?
-  - c) Auf Wiedersehen!
-  - d) Nicht so gut.
-  correctIndex: 2
+  - a) Der Sommer.
+  - b) Der Winter.
+  - c) Der Herbst.
+  - "d) Der Fr\xFChling."
+  correctIndex: 1
   successMessage: 
   failMessage: 

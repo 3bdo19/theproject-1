@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
+  m_Name: q 1 (4)
+  m_EditorClassIdentifier: Assembly-CSharp::SituationData
+  questionText: 'Jemand sagt: "Berlin ist die Hauptstadt von Deutschland.'
+  answers:
+  - a) Ja, richtig.
+  - b) Nein, das ist falsch.
+  - "c) Ich wei\xDF nicht."
+  - d) Keine Ahnung.
+  correctIndex: 0
+  successMessage: you are fine!
+  failMessage: you are bad!

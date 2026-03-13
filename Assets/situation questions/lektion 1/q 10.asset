@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 10
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Du siehst einen Hund. Ein Freund fragt: "Magst du Hunde?". Du hast
-    ein bisschen Angst. Was antwortest du?'
+  questionText: 10. Ein T-Shirt kostet nur 5 Euro. Das ist sehr ___________.
   answers:
-  - a) Ja, ich mag Hunde.
-  - b) Nein, ich mag Hunde nicht.
-  - c) Ja, Hunde sind gut.
-  - "d) Nein, Fu\xDFball ist besser."
-  correctIndex: 1
+  - a) teuer.
+  - "b) gro\xDF."
+  - c) nicht gut.
+  - "d) g\xFCnstig."
+  correctIndex: 3
   successMessage: 
   failMessage: 

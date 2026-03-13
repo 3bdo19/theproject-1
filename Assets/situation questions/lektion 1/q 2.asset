@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e7e4170eb22cc4dbcd62d6965d2ed4, type: 3}
   m_Name: q 2
   m_EditorClassIdentifier: Assembly-CSharp::SituationData
-  questionText: 'Jemand fragt dich: "Hallo, wie geht''s?". Du bist okay. Was antwortest
-    du?'
+  questionText: 2. In welchem Monat feiert man in Deutschland typischerweise Weihnachten?
   answers:
-  - a) Auf Wiedersehen.
-  - b) Gut, danke. Und dir?
-  - c) Ich mag Tennis.
-  - d) Wie bitte?
-  correctIndex: 1
+  - a) Im Juni.
+  - b) Im April.
+  - c) Im Oktober.
+  - d) Im Dezember.
+  correctIndex: 3
   successMessage: 
   failMessage: 
